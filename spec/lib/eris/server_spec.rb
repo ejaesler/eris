@@ -89,7 +89,7 @@ describe "Eris Server" do
     it "should shell out to luna" do
       luna_request = double('LunaRequest')
       luna_request.stub!(:execute)
-      LunaRequest.stub!(:new).and_return(luna_request)
+      Eris::LunaRequest.stub!(:new).and_return(luna_request)
       luna_request.should_receive(:execute)
 
       req_string = '{"body": {"foo" : "bar" }, "url": "http://www.example.com/"}'
