@@ -1,21 +1,21 @@
 require 'rubygems'
 require 'sinatra'
 require 'erb'
+require 'json'
 
 module Eris
   class Server < Sinatra::Base
+    JS_HELPER_PATH = File.dirname(__FILE__) + '/../../../js_helpers/'
 
-    JS_HELPER_PATH = File.dirname(__FILE__) + '../../../js_helpers/'
-
-    def initialize(path)
+    def initialize(path=Dir.pwd)
       @path = path
       settings.views = path
       super
     end
 
     Tilt.register :erb, Tilt[:erubis]
-    enable :raise_errors ###################################!!!
-    disable :show_exceptions
+#    enable :raise_errors ###################################!!!
+#    disable :show_exceptions
 
     ['/', '/index.html'].each do |route|
       get route do

@@ -13,7 +13,8 @@ describe "Eris Server" do
   include Rack::Test::Methods
 
   let(:app_dir) do
-    File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'sample_app/')
+    File.join(File.dirname(__FILE__), '..', '..', '..', 'fixtures', 'sample_app/')
+    
   end
 
   let(:app) do
@@ -69,7 +70,7 @@ describe "Eris Server" do
   context "when serving eris-helpers" do
     before :each do
       get '/eris-helpers/ErisHelpers.js'
-      @body = last_response.body;
+      @body = last_response.body
     end
 
     it "should include the fake app relaunch" do
