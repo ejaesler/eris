@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 require 'erb'
 
@@ -18,7 +19,22 @@ module Eris
 
     ['/', '/index.html'].each do |route|
       get route do
-        erb(:'index.html')
+        app_info = JSON.parse(File.read(File.join(@path, 'appinfo.json')))
+
+        locals = {
+            :app_title => app_info["title"],
+            :enyo_path => "enyo/0.10/framework/enyo.js",
+            :eris_helper_tags => '<script src="eris-helpers/ErisHelpers.js" type="text/javascript" eris-helpers=true></script>',
+            :app_helper_tags => nil
+        }
+
+        app_helpers = File.join('spec', 'helpers', 'AppHelpers.js')
+
+        if File.exist? File.join(@path, app_helpers)
+          locals[:app_helper_tags] = %Q{<script src="#{app_helpers}" type="text/javascript" app-helpers=true></script>}
+        end
+
+        erb :'index.html', :locals => locals
       end
     end
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= app_title %></title>
+  <script src="<%= enyo_path -%>" type="text/javascript" enyo=true></script>
+  <%= eris_helper_tags %>
+  <%= app_helper_tags if app_helper_tags%>
+</head>
+<body>
+<div id="app-container" class="enyo-fit"></div>
+<script type="text/javascript">
+  app.go();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "title": "Sample Eris App",
+  "id": "com.example.sampleapp",
+  "icon": "icon.png",
+  "uiRevision": 2,
+  "type": "web",
+  "version": "0.0.1",
+  "main": "index.html",
+  "vendor": "ExampleCo"
+}

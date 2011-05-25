@@ -12,33 +12,17 @@ x  * map / to /index.html
 describe "Eris Server" do
   include Rack::Test::Methods
 
-  let(:tmp_dir) do
-    tmp_dir = "#{Dir.tmpdir}/eris"
-    FileUtils.rm_rf tmp_dir
-    FileUtils.mkdir_p tmp_dir+"/a/"
-
-
-    system("echo 'function() {}' > #{tmp_dir}/a/foo.js")
-
-    index = <<INDEX
-<html>
-  <script enyo=true src='enyo/0.10/framework/enyo.js'></script>
-  <script eris-helpers=true src='eris-helpers/ErisHelpers.js'></script>
-  <script app-helpers=true src='app-helpers/AppHelpers.js'></script>
-</html>
-INDEX
-    File.open("#{tmp_dir}/index.html.erb", 'w') {|f| f.write(index) }
-
-    tmp_dir
+  let(:app_dir) do
+    File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'sample_app/')
   end
 
   let(:app) do
-    @our_app = Eris::Server.new(tmp_dir)
+    @our_app = Eris::Server.new(app_dir)
     @our_app
   end
 
   it "can return any static filepath" do
-    get '/a/foo.js'
+    get '/app/models/foo.js'
     last_response.should be_ok
     last_response.body.should match(/function/)
   end
@@ -56,6 +40,10 @@ INDEX
       @body = Nokogiri(last_response.body)
     end
 
+    it "should have an app title" do
+       @body.css('title').first.content.should == "Sample Eris App"
+    end
+
     it "should load the local version of the enyo framework" do
       enyo_tags = @body.css('script[@enyo]')
 
@@ -71,12 +59,11 @@ INDEX
     end
 
     it "should load the app's specific helper files" do
-      eris_helper_tags = @body.css('script[@app-helpers]')
+      app_helper_tags = @body.css('script[@app-helpers]')
 
-      eris_helper_tags.length.should == 1
-      eris_helper_tags.first["src"].should == "app-helpers/AppHelpers.js"
+      app_helper_tags.length.should == 1
+      app_helper_tags.first["src"].should match("AppHelpers.js")
     end
-
   end
 
   context "when serving eris-helpers" do
@@ -95,13 +82,6 @@ INDEX
 
     it "should include the XHR proxy for arbitrary AJAX calls" do
       @body.should match(/var ProxiedRequest = enyo.kind\(\{/)
-    end
-  end
-
-  describe "app-helpers IS THIS A NOOP?" do
-    xit "should render them out of the app path" do
-      get '/app-helpers/AppHelpers.js'
-      last_response.body.should == "var appHelpers = {}"
     end
   end
 
