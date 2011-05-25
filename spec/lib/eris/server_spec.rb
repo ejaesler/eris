@@ -41,7 +41,7 @@ describe "Eris Server" do
     end
 
     it "should have an app title" do
-       @body.css('title').first.content.should == "Sample Eris App"
+      @body.css('title').first.content.should == "Sample Eris App"
     end
 
     it "should load the local version of the enyo framework" do
@@ -98,10 +98,16 @@ describe "Eris Server" do
     end
   end
 
-#  describe "when making an external API XHR" do
-#    it "should shell out to curl" do
-#      Kernel.stub!(:`)
-#      get '/luna/fooo'
-#    end
-#  end
+  describe "when making an external API XHR" do
+    it "should shell out to curl" do
+      proxied_request = double('ProxiedRequest')
+      proxied_request.stub!(:execute)
+      Eris::ProxiedRequest.stub!(:new).and_return(proxied_request)
+      proxied_request.should_receive(:execute)
+
+      req_string = '{"body": {"foo" : "bar" }, "url": "http://www.example.com/"}'
+
+      get "/xhrproxy?req=#{URI.encode(req_string)}"
+    end
+  end
 end

@@ -39,12 +39,11 @@ module Eris
     end
 
     get '/luna*' do
-      luna_request = LunaRequest.new(JSON.parse(params[:req]))
-      luna_request.execute
+      LunaRequest.new(JSON.parse(params[:req])).execute
     end
 
-    get '/xhr/*' do
-      # ProxiedXhrRequest
+    get '/xhrproxy*' do
+      ProxiedRequest.new(JSON.parse(params[:req])).execute
     end
 
     get '/eris-helpers/*' do
