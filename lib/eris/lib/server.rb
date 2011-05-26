@@ -14,7 +14,7 @@ module Eris
     end
 
     Tilt.register :erb, Tilt[:erubis]
-#    enable :raise_errors ###################################!!!
+#    enable :raise_errors
 #    disable :show_exceptions
 
     ['/', '/index.html'].each do |route|
@@ -25,15 +25,15 @@ module Eris
             :app_title => app_info["title"],
             :enyo_path => "enyo/0.10/framework/enyo.js",
             :eris_helper_tags => '<script src="eris-helpers/ErisHelpers.js" type="text/javascript" eris-helpers=true></script>',
-            :app_helper_tags => nil
+            :app_helper_tag => nil,
+            :launch_params => params['launchParams']
         }
 
-        app_helpers = File.join('spec', 'helpers', 'AppHelpers.js')
-
-        if File.exist? File.join(@path, app_helpers)
-          locals[:app_helper_tags] = %Q{<script src="#{app_helpers}" type="text/javascript" app-helpers=true></script>}
+        app_helper = File.join('spec', 'acceptance', 'helpers', 'AppHelper.js')
+        if File.exist?(File.join(@path, app_helper))
+          locals[:app_helper_tag] = %Q{<script src="#{app_helper}" type="text/javascript" app-helper=true></script>}
         end
-
+        
         erb :'index.html', :locals => locals
       end
     end

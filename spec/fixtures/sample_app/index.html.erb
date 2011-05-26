@@ -2,9 +2,14 @@
 <html>
 <head>
   <title><%= app_title %></title>
-  <script src="<%= enyo_path -%>" type="text/javascript" enyo=true></script>
+  <script src="<%= enyo_path -%>" type="text/javascript" enyo="true"></script>
   <%= eris_helper_tags %>
-  <%= app_helper_tags if app_helper_tags%>
+  <%= app_helper_tag %>
+  <% if launch_params %>
+    <script type="text/javascript" launch-params="true">
+      relaunchWithParams('<%= launch_params %>');
+    </script>
+  <% end %>
 </head>
 <body>
 <div id="app-container" class="enyo-fit"></div>

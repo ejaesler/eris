@@ -13,8 +13,7 @@ describe "Eris Server" do
   include Rack::Test::Methods
 
   let(:app_dir) do
-    File.join(File.dirname(__FILE__), '..', '..', '..', 'fixtures', 'sample_app/')
-    
+    File.join(File.dirname(__FILE__), '..', '..', '..', 'fixtures', 'sample_app')
   end
 
   let(:app) do
@@ -60,10 +59,24 @@ describe "Eris Server" do
     end
 
     it "should load the app's specific helper files" do
-      app_helper_tags = @body.css('script[@app-helpers]')
+      app_helper_tags = @body.css('script[@app-helper]')
 
       app_helper_tags.length.should == 1
-      app_helper_tags.first["src"].should match("AppHelpers.js")
+      app_helper_tags.first["src"].should == "spec/acceptance/helpers/AppHelper.js"
+    end
+  end
+
+  describe "when injecting launch params" do
+    it "does nothing if launch_params is nil" do
+      get '/'
+      @body = Nokogiri(last_response.body)
+      @body.css('script[@launch-params]').length.should == 0
+    end
+
+    it "injects the launch params script if launchParams is present" do
+      get '/?launchParams=foo'
+      @body = Nokogiri(last_response.body)
+      @body.css('script[@launch-params]').length.should == 1
     end
   end
 
