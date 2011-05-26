@@ -6,8 +6,7 @@ module Eris
     end
 
     def cmd_str
-      query_params = @body.collect {|k,v| "#{k}=#{v}" }.join('&')
-
+      query_params = @body.collect {|k,v| "#{URI.encode(k.to_s)}=#{URI.encode(v.to_s)}" }.join('&')
       "curl '#{@url}?#{query_params}'"
     end
 
