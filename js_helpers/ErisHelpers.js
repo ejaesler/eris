@@ -80,4 +80,5 @@ var ProxiedRequest = enyo.kind({
   destroy: enyo.nop
 });
 
-
+// For Test: inject test-only state before Enyo loads
+window.development = true;
