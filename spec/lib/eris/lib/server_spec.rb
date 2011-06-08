@@ -100,15 +100,33 @@ describe "Eris Server" do
   end
 
   describe "when making a palm/luna XHR" do
-    it "should shell out to luna" do
+    let :luna_request do
       luna_request = double('LunaRequest')
       luna_request.stub!(:execute)
+    end
+
+    before :each do
       Eris::LunaRequest.stub!(:new).and_return(luna_request)
-      luna_request.should_receive(:execute)
+    end
 
-      req_string = '{"body": {"foo" : "bar" }, "url": "http://www.example.com/"}'
+    describe "to other services" do
+      it "should shell out to luna" do
+        luna_request.should_receive(:execute)
+        req_string = '{"body": {"foo" : "bar" }, "url": "http://www.example.com/"}'
 
-      get "/luna?req=#{URI.encode(req_string)}"
+        get "/luna?req=#{URI.encode(req_string)}"
+      end
+    end
+
+    describe "to the location service" do
+      it "does not shell out" do
+        Eris::LunaRequest.stub!(:new).and_return(luna_request)
+        luna_request.should_not_receive(:execute)
+
+        req_string = '{"body": {}, "url": "palm://com.palm.location/getCurrentPosition"}'
+
+        get "/luna?req=#{URI.encode(req_string)}"
+      end
     end
   end
 

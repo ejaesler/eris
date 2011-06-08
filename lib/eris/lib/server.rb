@@ -14,8 +14,8 @@ module Eris
     end
 
     Tilt.register :erb, Tilt[:erubis]
-#    enable :raise_errors
-#    disable :show_exceptions
+    enable :raise_errors
+    disable :show_exceptions
 
     ['/', '/index.html'].each do |route|
       get route do
@@ -39,7 +39,12 @@ module Eris
     end
 
     get '/luna*' do
-      LunaRequest.new(JSON.parse(params[:req])).execute
+      req = JSON.parse(params[:req])
+      if req["url"] =~ /getCurrentPosition/
+        '{"altitude":-10000000,"errorCode":0,"heading":0,"horizAccuracy":-1,"latitude":37.392809,"longitude":-122.040461,"returnValue":true,"timestamp":1307557148000,"velocity":-1,"vertAccuracy":-1}'
+      else
+        LunaRequest.new(req).execute
+      end
     end
 
     get '/xhrproxy*' do
