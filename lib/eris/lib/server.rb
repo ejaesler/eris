@@ -48,7 +48,9 @@ module Eris
     end
 
     get '/xhrproxy*' do
-      ProxiedRequest.new(JSON.parse(params[:req])).execute
+      response, status_code = ProxiedRequest.new(JSON.parse(params[:req])).execute
+      status status_code
+      response
     end
 
     get '/eris-helpers/*' do

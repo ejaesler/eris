@@ -1,0 +1,34 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://dev.virtualearth.net:80/REST/v1/Routes/Driving?c=en-US&dateTime=14:46:48&distanceUnit=mi&key=Ah2oavKf-raTJYVgMxnxJg9E2E2_53Wb3jz2lD4N415EFSKwFlhlMe9U2dJpMZyJ&output=json&routePathOutput=Points&timeType=Departure&wp.0=731%20Market%20St,%20San%20Francisco,%20ca&wp.1=jkhgkjhgkjhg
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 404
+      message: Not Found
+    headers: 
+      x-powered-by: 
+      - ASP.NET
+      x-aspnet-version: 
+      - 2.0.50727
+      content-type: 
+      - application/json
+      x-bm-srv: 
+      - BL2M001310, BL2MSNVM001815, BL2MSNVM001291, BL2MSNVM001266, BL2MSNVM001260, BL2MSNVM001265, BL2MSNVM001279, BL2MSNVM001292, BL2MSNVM001817, BL2MSNVM001297
+      x-ms-bm-ws-info: 
+      - "0"
+      server: 
+      - Microsoft-IIS/7.5
+      date: 
+      - Fri, 24 Jun 2011 22:05:25 GMT
+      cache-control: 
+      - no-cache
+      transfer-encoding: 
+      - chunked
+      x-bm-traceid: 
+      - 6144d092df924727a5f0935528c5cbb2
+    body: "{\"authenticationResultCode\":\"ValidCredentials\",\"brandLogoUri\":\"http:\\/\\/dev.virtualearth.net\\/Branding\\/logo_powered_by.png\",\"copyright\":\"Copyright \xC2\xA9 2011 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.\",\"errorDetails\":[\"One or more locations specified in the waypoint parameter are invalid or require more information.\",\"jkhgkjhgkjhg\"],\"resourceSets\":[],\"statusCode\":404,\"statusDescription\":\"Not Found\",\"traceId\":\"6144d092df924727a5f0935528c5cbb2|BL2M001310|02.00.126.1500|BL2MSNVM001815, BL2MSNVM001291, BL2MSNVM001266, BL2MSNVM001260, BL2MSNVM001265, BL2MSNVM001279, BL2MSNVM001292, BL2MSNVM001817, BL2MSNVM001297\"}"
+    http_version: "1.1"

@@ -4,7 +4,7 @@ describe Eris::LunaRequest do
   it "should populate the service correctly" do
     request = Eris::LunaRequest.new({ "url" => "com.palm.db", "body" => ["foo"]})
 
-    request.cmd_str.should match(/-i com\.palm\.db/)
+    request.url.should match(/-i com\.palm\.db/)
   end
 
   describe "param escaping" do

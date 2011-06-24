@@ -3,6 +3,7 @@ Dir[File.dirname(__FILE__) + "/eris/**/*.rb"].each do |file|
 end
 
 require 'thor'
+require 'curb'
 
 module Eris
   class Tasks < Thor

@@ -131,6 +131,25 @@ describe "Eris Server" do
   end
 
   describe "when making an external API XHR" do
+    it "should give a 200 if it's sucessful" do
+      VCR.use_cassette('success') do
+        req_string = '{"body": {"foo" : "bar" }, "url": "http://www.google.com/"}'
+
+        get "/xhrproxy?req=#{URI.encode(req_string)}"
+        last_response.should be_ok
+        last_response.body.should match(/google/)
+      end
+    end
+
+    it "should give a 200 if it's sucessful" do
+      VCR.use_cassette('failure') do
+        req_string = '{"url":"http://dev.virtualearth.net/REST/v1/Routes/Driving","body":{"output":"json","c":"en-US","key":"Ah2oavKf-raTJYVgMxnxJg9E2E2_53Wb3jz2lD4N415EFSKwFlhlMe9U2dJpMZyJ","routePathOutput":"Points","timeType":"Departure","dateTime":"14:46:48","distanceUnit":"mi","wp.0":"731 Market St, San Francisco, ca","wp.1":"jkhgkjhgkjhg"}}'
+
+        get "/xhrproxy?req=#{URI.encode(req_string)}"
+        last_response.should_not be_ok
+      end
+    end
+
     it "should shell out to curl" do
       proxied_request = double('ProxiedRequest')
       proxied_request.stub!(:execute)

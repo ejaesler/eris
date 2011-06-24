@@ -5,13 +5,14 @@ module Eris
       @body = params["body"]
     end
 
-    def cmd_str
+    def url
       query_params = @body.collect {|k,v| "#{URI.encode(k.to_s)}=#{URI.encode(v.to_s)}" }.join('&')
-      "curl '#{@url}?#{query_params}'"
+      "#{@url}?#{query_params}"
     end
 
     def execute
-      `#{cmd_str}`
+      response  = Curl::Easy.perform(url)
+      [response.body_str, response.response_code]
     end
   end
 end
