@@ -60,5 +60,12 @@ describe Eris do
         rakefile_contents.should include('rvm use ruby-1.9.2-p180@palm')
       end            
     end
+    
+    it "should generate a ci_build.sh" do
+      Dir.chdir @tmp_dir do
+        rakefile_contents = File.read("ci_build.sh")
+        rakefile_contents.should include('bundle exec rake jasmine:ci')
+      end      
+    end
   end
 end
