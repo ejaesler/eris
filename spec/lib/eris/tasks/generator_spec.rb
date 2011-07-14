@@ -65,7 +65,13 @@ describe Eris do
       Dir.chdir @tmp_dir do
         rakefile_contents = File.read("ci_build.sh")
         rakefile_contents.should include('bundle exec rake jasmine:ci')
-      end      
+      end
+    end
+    
+    it "ci_build.sh should be executable" do
+      Dir.chdir @tmp_dir do
+        File.executable?("ci_build.sh").should be_true
+      end
     end
   end
 end
