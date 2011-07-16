@@ -48,7 +48,7 @@ describe "Eris Server" do
       enyo_tags = @body.css('script[@enyo]')
 
       enyo_tags.length.should == 1
-      enyo_tags.first["src"].should == "enyo/0.10/framework/enyo.js"
+      enyo_tags.first["src"].should == "enyo/1.0/framework/enyo.js"
     end
 
     it "should load the common helper files" do

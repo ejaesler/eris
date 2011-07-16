@@ -23,7 +23,7 @@ module Eris
 
         locals = {
             :app_title => app_info["title"],
-            :enyo_js => "enyo/0.10/framework/enyo.js",
+            :enyo_js => "enyo/1.0/framework/enyo.js",
             :eris_helper_tags => '<script src="eris-helpers/ErisHelpers.js" type="text/javascript" eris-helpers=true></script>',
             :app_helper_tag => nil,
             :launch_params => params['launchParams']
