@@ -23,7 +23,6 @@ module Eris
 
         locals = {
             :app_title => app_info["title"],
-            :enyo_root => "",
             :eris_helper_tags => '<script src="eris-helpers/ErisHelpers.js" type="text/javascript" eris-helpers=true></script>',
             :app_helper_tag => nil,
             :launch_params => params['launchParams']
@@ -55,6 +54,11 @@ module Eris
 
     get '/eris-helpers/*' do
       serve_static_files_from(JS_HELPER_PATH, params[:splat].first)
+    end
+
+    get '/usr/palm/frameworks/*' do
+      config = ErisConfig.new(:config_path => File.join(@path, 'eris_config.json'), :app_root => @path)
+      serve_static_files_from(config.enyo_root, params[:splat].first)
     end
 
     get '*' do

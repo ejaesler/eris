@@ -3,12 +3,7 @@ require 'jasmine'
 namespace :jasmine do
   task :server do
     require 'jasmine'
-
-    Jasmine::Config.class_eval <<RUBY
-      def simple_config_file
-        File.join(project_root, 'spec/unit/support/jasmine.yml')
-      end
-RUBY
+    require 'eris/lib/jasmine_config_overrides'
 
     puts "your tests are here:"
     puts "  http://localhost:8888/"
@@ -21,12 +16,13 @@ RUBY
     require 'jasmine'
     require "rspec"
     require "rspec/core/rake_task"
+    require 'eris'
     ENV['JASMINE_BROWSER'] = 'chrome'
 
     RSpec::Core::RakeTask.new(:jasmine_continuous_integration_runner) do |t|
       t.rspec_opts = ["--color", "--format", "progress"]
       t.verbose = true
-      t.pattern = ['spec/unit/support/jasmine_runner.rb']
+      t.pattern = ["#{Eris::FILE_PATH}/eris/lib/jasmine_rspec_runner.rb"]
     end
     Rake::Task["jasmine_continuous_integration_runner"].invoke
   end

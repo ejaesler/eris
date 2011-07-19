@@ -35,3 +35,7 @@ def capture_output
  ensure
    $stdout = STDOUT
 end
+
+def system!(command)
+  system(command) || raise("Failed: #{command}")
+end

@@ -44,11 +44,11 @@ describe "Eris Server" do
       @body.css('title').first.content.should == "Sample Eris App"
     end
 
-    it "should load the local version of the enyo framework" do
+    it "should load the shared version of the enyo framework" do
       enyo_tags = @body.css('script[@enyo]')
 
       enyo_tags.length.should == 1
-      enyo_tags.first["src"].should == "enyo/0.10/framework/enyo.js"
+      enyo_tags.first["src"].should == "/usr/palm/frameworks/enyo/0.10/framework/enyo.js"
     end
 
     it "should load the common helper files" do
@@ -96,6 +96,17 @@ describe "Eris Server" do
 
     it "should include the XHR proxy for arbitrary AJAX calls" do
       @body.should match(/var ProxiedRequest = enyo.kind\(\{/)
+    end
+  end
+  
+  context "when serving enyo" do
+    before :each do
+      get '/usr/palm/frameworks/enyo/0.10/framework/enyo.js'
+      @body = last_response.body
+    end
+
+    it "should return enyo" do
+      @body.should == "This is the enyo.js fixture"
     end
   end
 
