@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "eris"
   s.version     = Eris::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Eris Authors"]
-  s.email       = ["eris@example.com"]
+  s.authors     = ["HP webOS", "Pivotal Labs"]
+  s.email       = ["pair@pivotallabs.com"]
   s.homepage    = ""
-  s.summary     = %q{Eris is a gem for woring on Enyo applications}
+  s.summary     = %q{Eris is a gem to help test driving webOS Enyo application development}
   s.description = %q{}
 
   s.rubyforge_project = "eris"
