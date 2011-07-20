@@ -44,7 +44,20 @@ describe Eris do
       Dir.chdir @tmp_dir do
         rakefile_contents = File.read("spec/unit/source/sampleSpec.js")
         rakefile_contents.should include('describe')
-      end            
+      end
+    end
+    
+    it "should generate a spec/unit/source/mock" do
+      Dir.chdir @tmp_dir do
+        File.exists?("spec/unit/source/mock").should be_true
+      end
+    end
+
+    it "should generate a spec/unit/specHelper.js" do
+      Dir.chdir @tmp_dir do
+        rakefile_contents = File.read("spec/unit/specHelper.js")
+        rakefile_contents.should include('getJson')
+      end
     end
 
     it "should generate a rvmrc" do
@@ -72,23 +85,6 @@ describe Eris do
         contents = File.read("eris_config.json")
         contents.should include('enyoRoot')
       end      
-    end
-    
-    it "should run jasmine:ci" do
-      Bundler.with_clean_env do
-        gem_dir = File.expand_path('../../../../', File.dirname(__FILE__))
-        sleep 5
-        system! "cd #{gem_dir} && bundle exec rake build"
-        system! "mkdir -p #{@tmp_dir}/vendor/cache/"
-        system! "cp #{gem_dir}/pkg/eris-#{Eris::VERSION}.gem #{@tmp_dir}/vendor/cache/"
-        system "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'gem uninstall -aIx eris'"
-        system! "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'gem list | grep bundler || gem install bundler'"
-        system! "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'bundle install'"
-        system! "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'bundle exec gem list | grep eris'"
-        system! "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'bundle exec gem list | grep jasmine'"
-        system "cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'bundle show jasmine'"
-        system("cd #{@tmp_dir} && rvm-exec ruby-1.9.2-p180@palm-test bash -c 'bundle exec rake jasmine:ci'").should be_true
-      end
     end
   end
 end

@@ -12,6 +12,8 @@ module Eris
       template "lib/eris/templates/ci_build.sh", "ci_build.sh"
       chmod "ci_build.sh", 0755
       template "lib/eris/templates/eris_config.json", "eris_config.json"
+      empty_directory "spec/unit/source/mock"
+      template "lib/eris/templates/specHelper.js", "spec/unit/specHelper.js"
     end
   end
 end
