@@ -10,7 +10,7 @@ describe Eris, "`server`" do
           exec("eris server")
         end
       end
-      sleep 2
+      sleep 3
     end
 
     it "should start the Eris server on the default port" do
