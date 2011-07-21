@@ -1,4 +1,5 @@
 require 'json'
+require 'pathname'
 
 class ErisConfig   
   def initialize(opts)
