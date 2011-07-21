@@ -7,11 +7,15 @@ class ErisConfig
     @app_root = opts[:app_root]
   end
   
+  def enyo_root_for_environment
+    ENV['IS_CI_BOX'] == "true" ? @config_hash['ciEnyoRoot'] : @config_hash['localEnyoRoot']
+  end
+  
   def enyo_root
-    if Pathname.new(@config_hash['enyoRoot']).absolute?
-      @config_hash['enyoRoot']
+    if Pathname.new(enyo_root_for_environment).absolute?
+      enyo_root_for_environment
     else
-      File.join(@app_root, @config_hash['enyoRoot'])
+      File.join(@app_root, enyo_root_for_environment)
     end
   end
 end

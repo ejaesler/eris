@@ -1,3 +1,4 @@
 {
-    "enyoRoot": "../"
+    "localEnyoRoot": "../",
+    "ciEnyoRoot": "../ciboxenyo"
 }

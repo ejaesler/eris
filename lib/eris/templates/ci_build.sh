@@ -13,4 +13,4 @@ echo USER=$USER && ruby --version && which ruby && which bundle
 # conditionally install project gems from Gemfile
 bundle check || bundle install --deployment || exit 1
 
-bundle exec rake jasmine:ci
+IS_CI_BOX=true bundle exec rake jasmine:ci

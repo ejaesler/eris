@@ -1,3 +1,4 @@
 {
-    "enyoRoot": "/Users/pivotal/workspace/"
+    "localEnyoRoot": "/usr/palm/frameworks/",
+    "ciEnyoRoot": "/usr/palm/frameworks/"
 }
