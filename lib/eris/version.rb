@@ -1,3 +1,3 @@
 module Eris
-  Eris::VERSION = "0.0.3"
+  Eris::VERSION = "0.0.4"
 end
