@@ -71,6 +71,7 @@ describe Eris do
       Dir.chdir @tmp_dir do
         rakefile_contents = File.read("ci_build.sh")
         rakefile_contents.should include('bundle exec rake jasmine:ci')
+        rakefile_contents.should_not include('trunk')
       end
     end
     

@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-cd trunk
-
 source $HOME/.rvm/scripts/rvm && source .rvmrc
 
 # install bundler if necessary
