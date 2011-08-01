@@ -84,7 +84,7 @@ describe Eris do
     it "should generate a eris_config.json" do
       Dir.chdir @tmp_dir do
         config = JSON.parse(File.read("eris_config.json"))
-        config['localEnyoRoot'].should == "/usr/palm/frameworks/"
+        config['localEnyoRoot'].should == "../../"
         config['ciEnyoRoot'].should == "/usr/palm/frameworks/"
       end      
     end

@@ -1,4 +1,4 @@
 {
-    "localEnyoRoot": "/usr/palm/frameworks/",
+    "localEnyoRoot": "../../",
     "ciEnyoRoot": "/usr/palm/frameworks/"
 }
