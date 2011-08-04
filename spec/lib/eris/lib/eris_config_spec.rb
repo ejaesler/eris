@@ -32,4 +32,21 @@ describe "Eris Config" do
       ENV['IS_CI_BOX'] = old_env_value
     end
   end
+
+
+  describe "#enyo_js_path" do
+
+    it "return the default path" do
+      config = ErisConfig.new(:config_path => @config_path, :app_root => @app_root)
+      config.enyo_js_path.should match('usr/palm/frameworks/enyo/0.10/framework/enyo.js')
+    end
+
+    it "should return a path with an overridden version number" do
+      @config_path = File.join(@app_root, 'eris_config_overridden_version.json')
+
+      config = ErisConfig.new(:config_path => @config_path, :app_root => @app_root)
+      config.enyo_js_path.should match('usr/palm/frameworks/enyo/19/framework/enyo.js')
+    end
+  end
+
 end

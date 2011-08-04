@@ -3,12 +3,11 @@ require 'eris/lib/eris_config'
 module Jasmine
   class Config
     def src_files
-      if simple_config['src_files']
-        p  match_files(src_dir, simple_config['src_files']) + ["usr/palm/frameworks/enyo/0.10/framework/enyo.js"]
-        match_files(src_dir, simple_config['src_files']) + ["usr/palm/frameworks/enyo/0.10/framework/enyo.js"]
-      else
-        []
-      end
+      eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => project_root)
+
+      files = ["/__ERIS_RESOURCES__/jasmineEnyoBootstrap.js", eris_config.enyo_js_path]
+      files += match_files(src_dir, simple_config['src_files']) if simple_config['src_files']
+      files
     end
     
     def simple_config_file
@@ -31,7 +30,8 @@ module Jasmine
       eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => config.project_root)
 
       map("/usr/palm/frameworks") { run Rack::File.new(eris_config.enyo_root) }
- 
+      map("/__ERIS_RESOURCES__") { run Rack::File.new(File.expand_path(File.dirname(__FILE__), '/../js')) }
+
       map('/') do
         run Rack::Cascade.new([
           Rack::URLMap.new('/' => Rack::File.new(config.src_dir)),

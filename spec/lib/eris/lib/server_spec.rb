@@ -106,7 +106,7 @@ describe "Eris Server" do
     end
 
     it "should return enyo" do
-      @body.should == "This is the enyo.js fixture"
+      @body.should match("This is the enyo.js fixture")
     end
   end
 

@@ -1,5 +1,6 @@
 require 'json'
 require 'pathname'
+require 'uri'
 
 class ErisConfig   
   def initialize(opts)
@@ -17,5 +18,11 @@ class ErisConfig
     else
       File.join(@app_root, enyo_root_for_environment)
     end
+  end
+
+  def enyo_js_path
+    version = @config_hash['enyoVersion'] || "0.10"
+
+    "usr/palm/frameworks/enyo/#{version}/framework/enyo.js"
   end
 end
