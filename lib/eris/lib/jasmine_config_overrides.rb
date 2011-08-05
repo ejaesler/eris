@@ -5,7 +5,7 @@ module Jasmine
     def src_files
       eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => project_root)
 
-      files = ["/__ERIS_RESOURCES__/jasmineEnyoBootstrap.js", eris_config.enyo_js_path]
+      files = ["__ERIS_RESOURCES__/jasmineEnyoBootstrap.js", eris_config.enyo_js_path]
       files += match_files(src_dir, simple_config['src_files']) if simple_config['src_files']
       files
     end
