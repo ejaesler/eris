@@ -46,6 +46,18 @@ describe Eris do
         rakefile_contents.should include('describe')
       end
     end
+
+    it "should generate a testResponses directory" do
+      Dir.chdir @tmp_dir do
+        File.exists?('spec/helpers/testResponses').should be_true
+      end
+    end
+
+    it "should generate a testResponses.js file" do
+      Dir.chdir @tmp_dir do
+        File.exists?('spec/helpers/testResponses.js').should be_true
+      end
+    end
     
     it "should generate a spec/unit/source/mock" do
       Dir.chdir @tmp_dir do
@@ -55,7 +67,7 @@ describe Eris do
 
     it "should generate a spec/unit/specHelper.js" do
       Dir.chdir @tmp_dir do
-        rakefile_contents = File.read("spec/unit/specHelper.js")
+        rakefile_contents = File.read("spec/helpers/specHelper.js")
         rakefile_contents.should include('getJson')
       end
     end
