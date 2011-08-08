@@ -1,19 +1,21 @@
 describe("setLaunchParams", function () {
-
+  var fakeXhr, fakeResponse;
   beforeEach(function() {
     window.history.pushState({}, "Jasmine Suite", "http://localhost:8888/");
+    fakeXhr = {
+      open: function() {},
+      send: function() {
+        fakeXhr.status = fakeResponse.status;
+       fakeXhr.responseText = fakeResponse.responseText;
+      },
+      responseText: null
+    };
+    spyOn(jasmineEnyoBootstrap, 'getXhr').andReturn(fakeXhr);
   });
 
   describe("when no launch parameters are specified", function () {
     beforeEach(function() {
-      spyOn(jasmineEnyoBootstrap, 'getXhr').andCallFake(function() {
-        return {
-          open: function() {
-            return testResponses.erisConfig.noLaunchParams.success;
-          }
-        }
-      });
-
+      fakeResponse = testResponses.erisConfig.noLaunchParams.success;
       jasmineEnyoBootstrap.setLaunchParams();
     });
 
@@ -24,14 +26,7 @@ describe("setLaunchParams", function () {
 
   describe("when launch parameters are specified", function () {
     beforeEach(function() {
-      spyOn(jasmineEnyoBootstrap, 'getXhr').andCallFake(function() {
-        return {
-          open: function() {
-            return testResponses.erisConfig.withLaunchParams.success;
-          }
-        }
-      });
-
+      fakeResponse = testResponses.erisConfig.withLaunchParams.success;
       jasmineEnyoBootstrap.setLaunchParams();
     });
 
