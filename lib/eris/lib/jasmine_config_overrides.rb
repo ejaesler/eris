@@ -16,6 +16,25 @@ module Jasmine
   end
 end
 
+
+# This exists in order to allow enyo.args to be initialized outside the Enyo loader's closure, only for
+# when specs are running. We've asked for this line to be added to the Enyo loader. This code is harmless
+# when the line gets added and can be removed from Eris once it is
+module Rack
+  class EnyoJs
+    def initialize(enyo_js_path)
+      @enyo_js_path = "/#{enyo_js_path}"
+    end
+
+    def call(env)
+      enyo_js = ::File.read(@enyo_js_path).gsub(/enyo\.args = \{\};/, "enyo.args = enyo.args || {};")
+      [200,
+       { "Content-Type"   => 'application/javascript' },
+       [enyo_js]]
+    end
+  end
+end
+
 module Jasmine
   def self.app(config)
     Rack::Builder.app do
@@ -29,6 +48,7 @@ module Jasmine
       map(config.root_path)    { run Rack::File.new(config.project_root) }
 
       eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => config.project_root)
+      map("/#{eris_config.enyo_js_path}") { run Rack::EnyoJs.new(eris_config.enyo_js_path) }
       map("/usr/palm/frameworks") { run Rack::File.new(eris_config.enyo_root) }
 
       map("/__ERIS_RESOURCES__") { run Rack::File.new(File.expand_path(File.join(File.dirname(__FILE__), '/../js'))) }

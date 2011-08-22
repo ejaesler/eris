@@ -20,9 +20,11 @@ class ErisConfig
     end
   end
 
-  def enyo_js_path
-    version = @config_hash['enyoVersion'] || "0.10"
+  def enyo_version
+    @config_hash['enyoVersion'] || "0.10"
+  end
 
-    "usr/palm/frameworks/enyo/#{version}/framework/enyo.js"
+  def enyo_js_path
+    "usr/palm/frameworks/enyo/#{enyo_version}/framework/enyo.js"
   end
 end
