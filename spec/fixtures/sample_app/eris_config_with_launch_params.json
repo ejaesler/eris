@@ -2,7 +2,7 @@
     "localEnyoRoot": "../",
     "ciEnyoRoot": "../ciboxenyo",
     "enyoLaunchParams": {
-        "foo": "bar baz",
-        "zip": 12
+        "foo": true,
+        "bar": false
     }
 }

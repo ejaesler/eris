@@ -1,7 +1,7 @@
 testResponses = {};
 
 testResponses.erisConfig = {
-  noLaunchParams: {
+  withDefaults: {
     success: {
       status: 200,
       responseText: JSON.stringify({
@@ -12,15 +12,17 @@ testResponses.erisConfig = {
     }
   },
 
-  withLaunchParams: {
+  withOverrides: {
     success: {
       status: 200,
       responseText: JSON.stringify({
           "localEnyoRoot": "../",
           "ciEnyoRoot": "../ciboxenyo",
+          "enyoVersion": "19",
           "enyoLaunchParams": {
-            "foo": "bar baz",
-            "zip": 12
+            "foo": true,
+            "bar": false,
+            "baz": true
           }
         }
       )
