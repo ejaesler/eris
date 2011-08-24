@@ -6,6 +6,7 @@ module Jasmine
       eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => project_root)
 
       files = ["__ERIS_RESOURCES__/jasmineEnyoBootstrap.js","__ERIS_RESOURCES__/jasmineEnyoLoader.js", eris_config.enyo_js_path]
+      files += ["usr/palm/frameworks/mojoloader.js"] if eris_config.use_mojoloader
       files += match_files(src_dir, simple_config['src_files']) if simple_config['src_files']
       files
     end
@@ -49,7 +50,8 @@ module Jasmine
 
       eris_config = ErisConfig.new(:config_path => 'eris_config.json', :app_root => config.project_root)
       map("/#{eris_config.enyo_js_path}") { run Rack::EnyoJs.new(eris_config.enyo_js_path) }
-      map("/usr/palm/frameworks") { run Rack::File.new(eris_config.enyo_root) }
+      map("/usr/palm/frameworks/enyo") { run Rack::File.new(eris_config.enyo_root) }
+      map("/usr/palm/frameworks") { run Rack::File.new(eris_config.frameworks_root) }
 
       map("/__ERIS_RESOURCES__") { run Rack::File.new(File.expand_path(File.join(File.dirname(__FILE__), '/../js'))) }
 

@@ -9,7 +9,7 @@ class ErisConfig
   end
   
   def enyo_root_for_environment
-    ENV['IS_CI_BOX'] == "true" ? @config_hash['ciEnyoRoot'] : @config_hash['localEnyoRoot']
+    ENV['IS_CI_BOX'] == "true" ? File.join(@config_hash['ciEnyoRoot'], 'enyo') : File.join(@config_hash['localEnyoRoot'], 'enyo')
   end
   
   def enyo_root
@@ -26,5 +26,21 @@ class ErisConfig
 
   def enyo_js_path
     "usr/palm/frameworks/enyo/#{enyo_version}/framework/enyo.js"
+  end
+
+  def frameworks_root_for_environment
+    ENV['IS_CI_BOX'] == "true" ? "usr/palm/frameworks/" : @config_hash['localFrameworksRoot'] || "usr/palm/frameworks"
+  end
+
+  def frameworks_root
+    if Pathname.new(frameworks_root_for_environment).absolute?
+      frameworks_root_for_environment
+    else
+      File.join(@app_root, frameworks_root_for_environment)
+    end
+  end
+
+  def use_mojoloader
+    @config_hash['useMojoLoader']
   end
 end
